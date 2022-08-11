@@ -1,5 +1,4 @@
 import React from "react";
-// import "./categoryItem.scss";
 import {
 	CategoryContainer,
 	CategoryBodyContainer,
@@ -9,7 +8,7 @@ import {
 } from "./CategoryItem.style";
 function CategoryItem({ categoryItem }) {
 	return (
-		<CategoryContainer>
+		<CategoryContainer to={categoryItem.linkUrl}>
 			<BackgroundImg backgroundImage={`url(${categoryItem.imageUrl})`} />
 			<CategoryBodyContainer>
 				<Title>{categoryItem.title}</Title>
@@ -19,4 +18,4 @@ function CategoryItem({ categoryItem }) {
 	);
 }
 
-export default CategoryItem;
+export default React.memo(CategoryItem);

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./SignUp.scss";
 import {
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
 } from "../../Utlitize/Firebase/Firebase";
 import Input from "../Ui/Input/Input";
 import Button from "../Ui/Button/Button";
+import { SignContainer } from "./SignUp..style";
 const defaultFormFields = {
 	displayName: "",
 	email: "",
 	password: "",
 	confirmPassword: "",
 };
-function SignUp() {
+function SignUp({ active, hidden }) {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const resetFormFields = () => setFormFields((prevState) => defaultFormFields);
 	const onChangeHandler = (event) => {
@@ -48,7 +48,10 @@ function SignUp() {
 	};
 
 	return (
-		<div className="sign-up-container">
+		<SignContainer
+			className={`sign-up-container ${active ? "active" : ""} ${
+				hidden ? "hidden" : ""
+			}`}>
 			<h2>Don't have an account </h2>
 			<span>Sign up with your email and password</span>
 			<form onSubmit={onSubmitHandler}>
@@ -86,7 +89,7 @@ function SignUp() {
 				/>
 				<Button type="submit">Sign Up</Button>
 			</form>
-		</div>
+		</SignContainer>
 	);
 }
 

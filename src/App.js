@@ -1,26 +1,37 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Auth from "./Pages/Auth/Auth";
-import Category from "./Pages/Category/Category";
 import Checkout from "./Pages/Checkout/Checkout";
 import Home from "./Pages/Home/Home";
 import Shop from "./Pages/Shop/Shop";
-import CategoriesContextProvider from "./Store/Context/CategoriesContext/CategoriesContextProvider";
+import { setCurrentUser } from "./Store/User/user.Actions";
+import {
+	createUserDocumentFromAuth,
+	onAuthChangeListener,
+} from "./Utlitize/Firebase/Firebase";
+
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const unsubscribe = onAuthChangeListener((user) => {
+			if (user) {
+				createUserDocumentFromAuth(user);
+			}
+			dispatch(setCurrentUser(user));
+		});
+		return unsubscribe;
+	}, [dispatch]);
 	return (
 		<>
 			<Navbar />
 			<Routes>
-				<Route index element={<Home />} />
+				<Route index path="/" element={<Home />} />
 				<Route path="auth" element={<Auth />} />
 				<Route path="checkout" element={<Checkout />} />
+				<Route path="/shop/*" element={<Shop />} />
 			</Routes>
-			<CategoriesContextProvider>
-				<Routes>
-					<Route path="shop" element={<Shop />} />
-					<Route path="shop/:category" element={<Category />} />
-				</Routes>
-			</CategoriesContextProvider>
 		</>
 	);
 }

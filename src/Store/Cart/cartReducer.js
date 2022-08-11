@@ -1,16 +1,14 @@
-export const CART_ACTION_TYPE = {
-	ADD_TO_CART: "ADD_TO_CART",
-	REMOVE_FROM_CART: "REMOVE_FROM_CART",
-	DELETE_ITEM: "DELETE_ITEM",
-	UPDATE_CART_ITEMS_COUNT: "UPDATE_CART_ITEMS_COUNT",
+import { CART_ACTION_TYPE } from "./cartTypes";
+const initialState = {
+	isCartOpen: false,
+	cartItems: [],
 };
 
-export const cartReducer = (state = {}, action) => {
+export const cartReducer = (state = initialState, action) => {
 	const { type, payload } = action;
 	switch (type) {
-		case "ADD_TO_CART": {
+		case CART_ACTION_TYPE.ADD_TO_CART: {
 			let newCartItems = [];
-			let newCartAmount = 0;
 			const existingCartItemIndex = state.cartItems.findIndex(
 				(item) => item.id === payload.id,
 			);
@@ -25,20 +23,17 @@ export const cartReducer = (state = {}, action) => {
 			} else {
 				newCartItems = [...state.cartItems, { ...payload, quantity: 1 }];
 			}
-			newCartAmount = state.cartTotalAmount + payload.price;
 			return {
 				...state,
 				cartItems: newCartItems,
-				cartTotalAmount: newCartAmount,
 			};
 		}
 
-		case "REMOVE_FROM_CART": {
+		case CART_ACTION_TYPE.REMOVE_FROM_CART: {
 			const existingCartItemIndex = state.cartItems.findIndex(
 				(item) => item.id === payload,
 			);
 			let newCartItems = [];
-			let newCartAmount = 0;
 			const existingCartItem = state.cartItems[existingCartItemIndex];
 			if (existingCartItem.quantity > 1) {
 				const updateExistingCartItem = {
@@ -50,27 +45,27 @@ export const cartReducer = (state = {}, action) => {
 			} else {
 				newCartItems = state.cartItems.filter((item) => item.id !== payload);
 			}
-			newCartAmount = state.cartTotalAmount - existingCartItem.price;
+
 			return {
 				...state,
 				cartItems: newCartItems,
-				cartTotalAmount: newCartAmount,
 			};
 		}
-		case "DELETE_ITEM": {
-			let newCartAmount = 0;
+		case CART_ACTION_TYPE.DELETE_ITEM: {
 			const newCartItems = state.cartItems.filter(
 				(item) => item.id !== payload.id,
 			);
-			newCartAmount = state.cartTotalAmount - payload.price * payload.quantity;
+
 			return {
 				...state,
 				cartItems: newCartItems,
-				cartTotalAmount: newCartAmount,
 			};
 		}
-		case "UPDATE_CART_ITEMS_COUNT": {
-			return { ...state, cartItemsCount: action.payload };
+
+		case CART_ACTION_TYPE.SET_IS_CART_OPEN: {
+			return { ...state, isCartOpen: payload };
 		}
+		default:
+			return state;
 	}
 };

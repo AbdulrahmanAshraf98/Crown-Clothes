@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
-import UserContext from "../../Store/Context/UserContext/UserContex";
+import React, { useState } from "react";
+
 import {
-	createUserDocumentFromAuth,
 	signInAuthUserWithEmailAndPassword,
 	signInWithGooglePopup,
 } from "../../Utlitize/Firebase/Firebase";
+import { SignContainer } from "../SignUp/SignUp..style";
 import Button, { buttonTypeClasses } from "../Ui/Button/Button";
 import Input from "../Ui/Input/Input";
 const defaultFormFields = {
 	email: "",
 	password: "",
 };
-function SignIn() {
+function SignIn({ active, hidden }) {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const resetFormFields = () => setFormFields((prevState) => defaultFormFields);
 
@@ -38,7 +38,10 @@ function SignIn() {
 		await signInWithGooglePopup();
 	};
 	return (
-		<div className="sign-up-container">
+		<SignContainer
+			className={`sign-in-container ${active ? "active" : ""} ${
+				hidden ? "hidden" : ""
+			}`}>
 			<h2>Already have an account </h2>
 			<span>Sign in with your email and password</span>
 			<form onSubmit={onSubmitHandler}>
@@ -69,7 +72,7 @@ function SignIn() {
 					</Button>
 				</div>
 			</form>
-		</div>
+		</SignContainer>
 	);
 }
 

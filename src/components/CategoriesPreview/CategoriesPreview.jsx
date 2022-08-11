@@ -12,9 +12,8 @@ function CategoriesPreview({
 	titleLink = false,
 	limit = null,
 }) {
-	console.log(titleLink);
 	return (
-		<CategoryPreviewContainer>
+		<CategoryPreviewContainer className="X">
 			<Title titleLink={titleLink}>
 				{titleLink ? (
 					<Link to={title}>{title.toUpperCase()}</Link>
