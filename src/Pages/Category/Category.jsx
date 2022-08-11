@@ -1,21 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CategoriesPreview from "../../components/CategoriesPreview/CategoriesPreview";
-import CategoriesContext from "../../Store/Context/CategoriesContext/CategoriesContext";
+import Spinner from "../../components/Ui/Spinner/Spinner";
+import {
+	categoriesMapSelector,
+	selectCategoriesIsError,
+	selectCategoriesIsLoading,
+} from "../../Store/Categories/categoriesSelector";
 
 function Category() {
 	const { category } = useParams();
-	const { categoriesMap } = useContext(CategoriesContext);
+	const categoriesMap = useSelector(categoriesMapSelector);
+	const categoriesIsLoading = useSelector(selectCategoriesIsLoading);
+	const categoriesFetchedError = useSelector(selectCategoriesIsError);
 	const [products, setProducts] = useState([]);
 	useEffect(() => {
 		setProducts(categoriesMap[category.toLowerCase()]);
 	}, [category, categoriesMap]);
 	return (
-		products && (
-			<section className="category-section">
-				{<CategoriesPreview title={category} products={products} />}
-			</section>
-		)
+		<>
+			{categoriesIsLoading && <Spinner></Spinner>}
+			{products && !categoriesIsLoading && (
+				<section className="category-section">
+					{<CategoriesPreview title={category} products={products} />}
+				</section>
+			)}
+		</>
 	);
 }
 

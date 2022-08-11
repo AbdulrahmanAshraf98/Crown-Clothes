@@ -18,6 +18,6 @@ export const Title = styled.h2`
 `;
 export const Preview = styled.div`
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: 1.5rem 1.5rem;
 `;

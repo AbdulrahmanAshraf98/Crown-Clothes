@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const BackgroundImg = styled.div`
@@ -18,9 +19,12 @@ export const CategoryBodyContainer = styled.div`
 	background-color: white;
 	opacity: 0.7;
 	position: absolute;
+	@media screen and (max-width: 800px) {
+		padding: 0 20px;
+	}
 `;
 
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled(Link)`
 	min-width: 30%;
 	height: 240px;
 	flex: 1 1 auto;
@@ -53,6 +57,9 @@ export const CategoryContainer = styled.div`
 
 	&:last-child {
 		margin-left: 7.5px;
+	}
+	@media screen and (max-width: 800px) {
+		height: 200px;
 	}
 `;
 
