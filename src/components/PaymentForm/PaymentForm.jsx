@@ -40,7 +40,7 @@ function PaymentForm() {
 			});
 			setIsProcessingPayment(false);
 			if (paymentResult.error) {
-				alert("error");
+				alert(paymentResult.error);
 			} else {
 				if (paymentResult.paymentIntent.status === "succeeded") {
 					alert("payment");
