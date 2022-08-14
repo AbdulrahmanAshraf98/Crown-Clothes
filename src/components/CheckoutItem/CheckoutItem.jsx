@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import {
 	addItemToCart,
@@ -16,13 +16,22 @@ import {
 } from "./CheckoutItem.style";
 function CheckoutItem({ cartItem }) {
 	const dispatch = useDispatch();
-	const addItem = () => dispatch(addItemToCart(cartItem));
-	const removeItem = () => dispatch(removeItemFromCart(cartItem.id));
-	const deleteItemHandler = () => dispatch(deleteItemFromCart(cartItem));
+	const addItem = useCallback(
+		() => dispatch(addItemToCart(cartItem)),
+		[cartItem, dispatch],
+	);
+	const removeItem = useCallback(
+		() => dispatch(removeItemFromCart(cartItem.id)),
+		[cartItem.id, dispatch],
+	);
+	const deleteItemHandler = useCallback(
+		() => dispatch(deleteItemFromCart(cartItem)),
+		[cartItem, dispatch],
+	);
 	return (
 		<CheckoutItemContainer>
 			<ImageContainer>
-				<img src={cartItem.imageUrl} />
+				<img src={cartItem.imageUrl} alt={cartItem.name} />
 			</ImageContainer>
 			<BaseSpan>{cartItem.name} </BaseSpan>
 			<Quantity>
