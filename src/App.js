@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import Auth from "./Pages/Auth/Auth";
-import Checkout from "./Pages/Checkout/Checkout";
 import Home from "./Pages/Home/Home";
+import Auth from "./Pages/Auth/Auth";
 import Shop from "./Pages/Shop/Shop";
+import Checkout from "./Pages/Checkout/Checkout";
+
 import { setCurrentUser } from "./Store/User/user.Actions";
 import {
 	createUserDocumentFromAuth,
